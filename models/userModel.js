@@ -9,6 +9,7 @@ const userSchema = new mongoose.Schema(
     email: {
       type: String,
       required: true,
+      unique: true,
     },
     password: {
       type: String,
@@ -24,7 +25,7 @@ const userSchema = new mongoose.Schema(
     },
     avatar: {
       type: String,
-      default: "avatar.jpg",
+      default: "https://res.cloudinary.com/devatchannel/image/upload/v1602752402/avatar/avatar_cugq40.png",
     },
   },
   {
