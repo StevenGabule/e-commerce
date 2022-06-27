@@ -7,7 +7,9 @@ export const getData = async (url, token) => {
       Authorization: token,
     },
   });
-  return await res.json();
+
+  const data = await res.json();
+  return data;
 };
 
 export const postData = async (url, post, token) => {
@@ -19,7 +21,9 @@ export const postData = async (url, post, token) => {
     },
     body: JSON.stringify(post),
   });
-  return await res.json();
+
+  const data = await res.json();
+  return data;
 };
 
 export const putData = async (url, post, token) => {
@@ -31,7 +35,9 @@ export const putData = async (url, post, token) => {
     },
     body: JSON.stringify(post),
   });
-  return await res.json();
+
+  const data = await res.json();
+  return data;
 };
 
 export const patchData = async (url, post, token) => {
@@ -43,7 +49,9 @@ export const patchData = async (url, post, token) => {
     },
     body: JSON.stringify(post),
   });
-  return await res.json();
+
+  const data = await res.json();
+  return data;
 };
 
 export const deleteData = async (url, token) => {
@@ -54,5 +62,7 @@ export const deleteData = async (url, token) => {
       Authorization: token,
     },
   });
-  return await res.json();
+
+  const data = await res.json();
+  return data;
 };

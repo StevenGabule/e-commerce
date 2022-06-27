@@ -1,6 +1,6 @@
-import { createContext, useEffect, useReducer } from "react";
+import { createContext, useReducer, useEffect } from "react";
+import reducers from "./Reducers";
 import { getData } from "../utils/fetchData";
-import { ACTIONS } from "./Actions";
 
 export const DataContext = createContext();
 
@@ -24,7 +24,7 @@ export const DataProvider = ({ children }) => {
       getData("auth/accessToken").then((res) => {
         if (res.err) return localStorage.removeItem("firstLogin");
         dispatch({
-          type: ACTIONS.AUTH,
+          type: "AUTH",
           payload: {
             token: res.access_token,
             user: res.user,
@@ -34,9 +34,10 @@ export const DataProvider = ({ children }) => {
     }
 
     getData("categories").then((res) => {
-      if (res.err) return dispatch({ type: ACTIONS.NOTIFY, payload: { error: res.err } });
+      if (res.err) return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+
       dispatch({
-        type: ACTIONS.ADD_CATEGORIES,
+        type: "ADD_CATEGORIES",
         payload: res.categories,
       });
     });
@@ -44,7 +45,8 @@ export const DataProvider = ({ children }) => {
 
   useEffect(() => {
     const __next__cart01__devat = JSON.parse(localStorage.getItem("__next__cart01__devat"));
-    if (__next__cart01__devat) dispatch({ type: ACTIONS.ADD_CART, payload: __next__cart01__devat });
+
+    if (__next__cart01__devat) dispatch({ type: "ADD_CART", payload: __next__cart01__devat });
   }, []);
 
   useEffect(() => {
@@ -54,20 +56,23 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     if (auth.token) {
       getData("order", auth.token).then((res) => {
-        if (res.err) return dispatch({ type: ACTIONS.NOTIFY, payload: { error: res.err } });
-        dispatch({ type: ACTIONS.ADD_ORDERS, payload: res.orders });
+        if (res.err) return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+
+        dispatch({ type: "ADD_ORDERS", payload: res.orders });
       });
+
       if (auth.user.role === "admin") {
         getData("user", auth.token).then((res) => {
-          if (res.err) return dispatch({ type: ACTIONS.NOTIFIY, payload: { error: res.err } });
-          dispatch({ type: ACTIONS.ADD_USERS, payload: res.users });
+          if (res.err) return dispatch({ type: "NOTIFY", payload: { error: res.err } });
+
+          dispatch({ type: "ADD_USERS", payload: res.users });
         });
       }
     } else {
-      dispatch({ type: ACTIONS.ADD_ORDERS, payload: [] });
-      dispatch({ type: ACTIONS.ADD_USERS, payload: [] });
+      dispatch({ type: "ADD_ORDERS", payload: [] });
+      dispatch({ type: "ADD_USERS", payload: [] });
     }
-  }, [auth.token, auth.user.role]);
+  }, [auth.token]);
 
   return <DataContext.Provider value={{ state, dispatch }}>{children}</DataContext.Provider>;
 };

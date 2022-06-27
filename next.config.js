@@ -8,5 +8,6 @@ module.exports = {
     CLOUD_UPDATE_PRESET: "just_ecom",
     CLOUD_NAME: "dwk4irhhy",
     CLOUD_API: "456643545785257",
+    PAYPAL_CLIENT_ID: "AVNXUD3ynv3ij3q4mnHVE4XtGhT1HO1RGLYJePFp6cROwdwVnA4mgqpr88CeFGAA_O_aOF7aFXTrT6nO",
   },
 };
